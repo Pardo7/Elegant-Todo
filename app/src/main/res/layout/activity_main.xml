@@ -17,28 +17,29 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnAddItem" />
+        android:layout_above="@+id/etNewItem" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/etNewItem"
-        android:layout_alignTop="@+id/btnAddItem"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/btnAddItem"
         android:layout_toStartOf="@+id/btnAddItem"
         android:layout_alignParentBottom="true" />
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Item"
         android:id="@+id/btnAddItem"
+        android:src="@drawable/ic_action_add"
         android:onClick="onAddItem"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/lvItems"
+        android:layout_alignEnd="@+id/lvItems"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="10dp"/>
 
 
 </RelativeLayout>
