@@ -27,13 +27,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lvItems = (ListView)findViewById(R.id.lvItems);
-        items = new ArrayList<>();
+    //Loading our items during the onCreate
+        readItems();
         itemsAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
-        items.add("First Item");
-        items.add("Second Item");
-
     // Invoking our list view listener
         setupListViewListener();
     }
@@ -43,16 +41,17 @@ public class MainActivity extends AppCompatActivity {
     // For every list view object, we attach a long click listener to it
         lvItems.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> adapter,
-                                                   View item, int pos, long id) {
-                        items.remove(pos); // Removing the item
-                        //notifying our adapter of a change and refreshing it
-                        itemsAdapter.notifyDataSetChanged();
-                        return true;
-                    }
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapter,
+                                           View item, int pos, long id) {
+                items.remove(pos); // Removing the item
+                //notifying our adapter of a change and refreshing it
+                itemsAdapter.notifyDataSetChanged();
+                writeItems();
+                return true;
+            }
 
-                });
+        });
     }
 
     // Adds input items to the list
@@ -61,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
         etNewItem.setText("");
+    // Saving out item when a new list item is added
+        writeItems();
     }
 
     private void readItems() {
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             items = new ArrayList<String>(FileUtils.readLines(todoFile));
         } catch (IOException e) {
-            e.printStackTrace();
+            items = new ArrayList<String>();
         }
     }
 
