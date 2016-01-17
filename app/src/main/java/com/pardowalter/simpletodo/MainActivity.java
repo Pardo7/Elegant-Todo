@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,7 +29,28 @@ public class MainActivity extends AppCompatActivity {
         lvItems.setAdapter(itemsAdapter);
         items.add("First Item");
         items.add("Second Item");
+
+    // Invoking our list view listener
+        setupListViewListener();
     }
+
+    // Creating our list view listener method
+    private void setupListViewListener() {
+    // For every list view object, we attach a long click listener to it
+        lvItems.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+             @Override
+             public boolean onItemLongClick(AdapterView<?> adapter,
+                                            View item, int pos, long id) {
+                 items.remove(pos); // Removing the item
+                 //notifying our adapter of a change and refreshing it
+                 itemsAdapter.notifyDataSetChanged();
+                 return true;
+             }
+
+        });
+    }
+
     // Adds input items to the list
     public void onAddItem(View v) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
