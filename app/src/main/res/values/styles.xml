@@ -6,9 +6,12 @@
         <item name="colorPrimary">#01579B</item>
         <item name="colorPrimaryDark">#01579B</item>
         <item name="colorAccent">#FF3D00</item>
+        <item name="android:fontFamily">@string/fontFamily__roboto_condensed_light</item>
     </style>
 
     <!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
     <!--<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
+    <string name="fontFamily__roboto_condensed_light">sans-serif-condensed-light</string>
+    <string name="fontFamily__roboto_black">sans-serif-black</string>
 
 </resources>
