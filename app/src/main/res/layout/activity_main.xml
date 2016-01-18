@@ -43,7 +43,7 @@
         android:layout_alignRight="@+id/lvItems"
         android:layout_alignEnd="@+id/lvItems"
         android:layout_marginBottom="24dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp" />
 
 
 </RelativeLayout>
