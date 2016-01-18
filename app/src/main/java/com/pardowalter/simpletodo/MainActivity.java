@@ -20,20 +20,20 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> items;
     ArrayAdapter<String> itemsAdapter;
     ListView lvItems;
-    int updateNote;
-    Boolean unique = false;
+    int noteId;
+    Boolean uniqueNote = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lvItems = (ListView)findViewById(R.id.lvItems);
-    //Loading our items during the onCreate
+        lvItems = (ListView) findViewById(R.id.lvItems);
+        //Loading our items during the onCreate
         readItems();
         itemsAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
-    // Invoking our list view listener
+        // Invoking  both our list view & onclick listeners
         setupListViewListener();
     }
 
@@ -43,23 +43,23 @@ public class MainActivity extends AppCompatActivity {
     // For every list view object, we attach a long click listener to it
         lvItems.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapter,
-                                           View item, int pos, long id) {
-                items.remove(pos); // Removing the item
-                //notifying our adapter of a change and refreshing it
-                itemsAdapter.notifyDataSetChanged();
-                writeItems();
-                return true;
-            }
-
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapter,
+                                                   View item, int pos, long id) {
+                        items.remove(pos); // Removing the item
+                        //notifying our adapter of a change and refreshing it
+                        itemsAdapter.notifyDataSetChanged();
+                        writeItems();
+                        return true;
+                    }
         });
 
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapter, View item, int position, long id) {
-                updateNote = position;
-                unique = true;
+            public void onItemClick(AdapterView<?> adapter,
+                                    View item, int position, long id) {
+                noteId = position;
+                uniqueNote = true;
 
                 String selectedFromList = (String) (lvItems.getItemAtPosition(position));
                 etNewItem.setText(selectedFromList);
@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Adds input items to the list
+    // Adds input items to the list and verifies uniqueness
     public void onAddItem(View v) {
 
-        if (unique == false) {
+        if (uniqueNote == false) {
             EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
             String itemText = etNewItem.getText().toString();
             itemsAdapter.add(itemText);
@@ -78,13 +78,13 @@ public class MainActivity extends AppCompatActivity {
         } else {
             EditText etUpdateItem = (EditText) findViewById(R.id.etNewItem);
             String itemText = etUpdateItem.getText().toString();
-            items.remove(updateNote);
-            itemsAdapter.insert(itemText, updateNote);
+            items.remove(noteId);
+            itemsAdapter.insert(itemText, noteId);
             etUpdateItem.setText("");
-            updateNote  = -1;
-            unique = false;
+            noteId = -1;
+            uniqueNote = false;
         }
-    // Saving our item when a new list item is added
+        // Saving our item when a new list item is added
         writeItems();
     }
 
