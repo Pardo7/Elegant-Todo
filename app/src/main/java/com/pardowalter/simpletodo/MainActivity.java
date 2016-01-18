@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> items;
     ArrayAdapter<String> itemsAdapter;
     ListView lvItems;
-
+    int updateNote;
+    Boolean unique = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Creating our list view listener method
     private void setupListViewListener() {
+        final EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
     // For every list view object, we attach a long click listener to it
         lvItems.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
@@ -52,15 +54,37 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View item, int position, long id) {
+                updateNote = position;
+                unique = true;
+
+                String selectedFromList = (String) (lvItems.getItemAtPosition(position));
+                etNewItem.setText(selectedFromList);
+            }
+        });
     }
 
     // Adds input items to the list
     public void onAddItem(View v) {
-        EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
-        String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
-        etNewItem.setText("");
-    // Saving out item when a new list item is added
+
+        if (unique == false) {
+            EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+            String itemText = etNewItem.getText().toString();
+            itemsAdapter.add(itemText);
+            etNewItem.setText("");
+        } else {
+            EditText etUpdateItem = (EditText) findViewById(R.id.etNewItem);
+            String itemText = etUpdateItem.getText().toString();
+            items.remove(updateNote);
+            itemsAdapter.insert(itemText, updateNote);
+            etUpdateItem.setText("");
+            updateNote  = -1;
+            unique = false;
+        }
+    // Saving our item when a new list item is added
         writeItems();
     }
 
