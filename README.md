@@ -12,8 +12,7 @@ A simple yet elegant to-do list app for android.
  * [x] *Extra*: Editable notes field for attaching longer descriptions/notes
  * [x] *Extra*: Adaptive to different screen orientations (landscape vs. portrait)
  
- **Note:**
- Received notice regarding the pre-work 3 days prior to submission. I would have loved to of added more with a bit more time :)
+ 
  
  **Gif walkthrough of the required, optional, and personal additions.**
  
